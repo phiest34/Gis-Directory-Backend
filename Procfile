@@ -1,0 +1,1 @@
+web: ./build/install/gis-directory-backend/bin/gis-directory-backend

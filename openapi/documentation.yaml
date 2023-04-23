@@ -1,0 +1,53 @@
+openapi: 3.0.0
+info:
+  title: Sample API
+  description: Optional multiline or single-line description in [CommonMark](http://commonmark.org/help/) or HTML.
+  version: 0.1.9
+paths:
+  /webmaps:
+    get:
+      summary: Returns list of webmaps.
+      responses:
+        '200':
+          description: A JSON array of webmaps
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  webmaps:
+                    type: array
+                    items:
+                      $ref: '#/definitions/WebmapModel'
+  /{assetPath}:
+    get:
+      summary: Load map by assetPath
+      parameters:
+        - in: path
+          name: assetPath
+          schema:
+            type: string
+          required: true
+          description: AssetPath key
+      responses:
+        '200':
+          description: OK
+          content:
+            text/html:
+              example: <html><body>Your HTML text</body></html>
+
+
+definitions:
+  WebmapModel:
+    type: object
+    properties:
+      assetName:
+        type: string
+        example: qgis_krasnogorsk_forest_zones
+      mapName:
+        type: string
+        example: Красногорск. Лесные зоны
+      description:
+        type: string
+        example: Перечисление списком всех слоев, описание местности, перечисление доступных подложек.
+
