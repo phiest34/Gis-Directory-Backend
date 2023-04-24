@@ -8,7 +8,7 @@ import com.example.register.registerWebMaps
 
 fun main() {
     embeddedServer(Netty, port = System.getenv("PORT").toInt()) {
-
+        module()
     }.start(wait = true)
 
 }
