@@ -7,9 +7,9 @@ import com.example.plugins.*
 import com.example.register.registerWebMaps
 
 fun main() {
-    embeddedServer(Netty, port = System.getenv("PORT").toInt()) {
+    startServer {
         module()
-    }.start(wait = true)
+    }
 
 }
 
@@ -18,4 +18,21 @@ fun Application.module() {
     configureSerialization()
     configureHTTP()
     configureRouting()
+}
+
+private fun startServer(registerBlock: Application.() -> Unit) {
+    val port = try {
+        System.getenv("PORT").toInt()
+    } catch (e: Exception) {
+        null
+    }
+
+    port?.let {
+        embeddedServer(Netty, port = port) {
+            registerBlock()
+        }.start(wait = true)
+    } ?: run {
+        embeddedServer(Netty, port = 8080, host = "0.0.0.0", module = registerBlock)
+            .start(wait = true)
+    }
 }
