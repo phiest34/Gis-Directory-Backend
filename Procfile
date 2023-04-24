@@ -1,1 +1,1 @@
-web: ./build/install/com.example.Gis-Directory-Backend/bin/com.example.Gis-Directory-Backend
+web: ./build/install/com.example.gis-directory-backend/bin/com.example.gis-directory-backend
