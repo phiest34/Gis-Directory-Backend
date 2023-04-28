@@ -8,7 +8,11 @@ import io.ktor.server.http.content.*
 
 fun Application.configureRouting() {
     routing {
-        staticResources("/", basePackage = "static")
+        staticResources("/", basePackage = "static/")
+
+        get("/") {
+            call.respondRedirect("/openapi")
+        }
 
         get("/webmaps") {
             call.respond("webmaps" to webMaps)
