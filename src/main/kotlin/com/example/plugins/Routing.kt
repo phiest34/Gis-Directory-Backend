@@ -1,5 +1,6 @@
 package com.example.plugins
 
+import com.example.models.ErrorStructure
 import com.example.register.webMaps
 import io.ktor.server.routing.*
 import io.ktor.server.response.*
@@ -16,6 +17,13 @@ fun Application.configureRouting() {
 
         get("/webmaps") {
             call.respond("webmaps" to webMaps)
+        }
+
+        get("webmaps/{assetName}") {
+            val assetName = call.parameters["assetName"] ?: return@get
+            val respond =
+                webMaps.find { it.assetPath == assetName } ?: run { ErrorStructure("No element was find", 204) }
+            call.respond(respond)
         }
     }
 }

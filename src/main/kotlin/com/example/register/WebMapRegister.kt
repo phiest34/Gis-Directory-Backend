@@ -7,14 +7,24 @@ val webMaps: List<WebMap>
 
 internal fun registerWebMaps() = register {
     webMap {
-        assetName { "qgis_krasnogorsk_forest_zones" }
-        name { "Лесные зоны Красногорска" }
+        assetName { "qgis_strogyno_forest_zone" }
+        name { "Лесные зоны района Строгино" }
         description {
             """
             Слои:
                 1) Говно
                 2) Моча
                 3) Жопа
+        """.trimIndent()
+        }
+    }
+
+    webMap {
+        assetName { "qgis_sibay_career" }
+        name { "Сибайский карьер" }
+        description {
+            """
+            Итересная информация о сибайском карьере из википедии
         """.trimIndent()
         }
     }
