@@ -16,13 +16,13 @@ fun Application.configureRouting() {
         }
 
         get("/webmaps") {
-            call.respond("webmaps" to webMaps)
+            call.respond(mapOf("webmaps" to webMaps))
         }
 
         get("webmaps/{assetName}") {
             val assetName = call.parameters["assetName"] ?: return@get
             val respond =
-                webMaps.find { it.assetPath == assetName }?.let { "webmap" to it } ?: ErrorStructure(
+                webMaps.find { it.assetPath == assetName }?.let { mapOf("webmap" to it) } ?: ErrorStructure(
                     "No element find",
                     204
                 )
