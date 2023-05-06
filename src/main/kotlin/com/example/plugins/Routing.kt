@@ -22,7 +22,11 @@ fun Application.configureRouting() {
         get("webmaps/{assetName}") {
             val assetName = call.parameters["assetName"] ?: return@get
             val respond =
-                webMaps.find { it.assetPath == assetName } ?: run { ErrorStructure("No element was find", 204) }
+                webMaps.find { it.assetPath == assetName }?.let { "webmap" to it } ?: ErrorStructure(
+                    "No element find",
+                    204
+                )
+
             call.respond(respond)
         }
     }
