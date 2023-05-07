@@ -1,0 +1,14 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.example.gisdirectory",
+      "sha256_cert_fingerprints": [
+        "8F:9F:65:97:A7:C4:E3:58:6A:06:06:44:30:AC:E8:2C:0F:74:A7:03:F7:2E:71:5B:D2:B0:71:40:93:C9:BF:E2"
+      ]
+    }
+  }
+]
