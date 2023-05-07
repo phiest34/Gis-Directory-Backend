@@ -28,6 +28,26 @@ internal fun registerWebMaps() = register {
         """.trimIndent()
         }
     }
+
+    webMap {
+        assetName { "qgis_strogyno_forest_zone_v2" }
+        name { "Лесные зоны района Строгино v2" }
+        description {
+            """
+            Итересная информация о сибайском карьере из википедии
+        """.trimIndent()
+        }
+    }
+
+    webMap {
+        assetName { "qgis_sibay_career_v2" }
+        name { "Сибайский карьер v2" }
+        description {
+            """
+            Итересная информация о сибайском карьере из википедии
+        """.trimIndent()
+        }
+    }
 }
 
 
