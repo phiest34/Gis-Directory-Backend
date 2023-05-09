@@ -4,6 +4,7 @@ import io.ktor.server.application.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
 import com.example.plugins.*
+import com.example.register.WebMapInfoStaticStorage
 import com.example.register.registerWebMaps
 
 fun main() {
@@ -17,7 +18,7 @@ fun Application.module() {
     registerWebMaps()
     configureSerialization()
     configureHTTP()
-    configureRouting()
+    configureRouting(WebMapInfoStaticStorage())
 }
 
 private fun startServer(registerBlock: Application.() -> Unit) {
