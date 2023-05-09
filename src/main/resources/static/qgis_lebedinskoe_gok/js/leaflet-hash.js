@@ -86,10 +86,6 @@
 			}
 
 			var hash = this.formatHash(this.map);
-			if (this.lastHash != hash) {
-				location.replace(hash);
-				this.lastHash = hash;
-			}
 		},
 
 		movingMap: false,
