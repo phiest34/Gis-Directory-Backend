@@ -1,5 +1,7 @@
 package com.example
 
+import com.example.admin.adminRouting
+import com.example.firebase.initFirebase
 import io.ktor.server.application.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
@@ -16,9 +18,11 @@ fun main() {
 
 fun Application.module() {
     registerWebMaps()
+    initFirebase()
     configureSerialization()
     configureHTTP()
     configureRouting(WebMapInfoStaticStorage())
+    adminRouting()
 }
 
 private fun startServer(registerBlock: Application.() -> Unit) {
