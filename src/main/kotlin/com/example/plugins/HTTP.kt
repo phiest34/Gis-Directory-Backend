@@ -1,11 +1,23 @@
 package com.example.plugins
 
-import io.ktor.server.routing.*
+import io.github.smiley4.ktorswaggerui.SwaggerUI
 import io.ktor.server.application.*
-import io.ktor.server.plugins.swagger.*
 
-fun Application.configureHTTP() {
-    routing {
-        swaggerUI("openapi", swaggerFile = "openapi/documentation.yaml")
+fun Application.configureSwagger() {
+    install(SwaggerUI) {
+        swagger {
+            swaggerUrl = "openapi"
+            forwardRoot = true
+        }
+        info {
+            title = "GIS Directory API"
+            version = "latest"
+            description = "API for GIS Directory android app and desktop admin panel."
+        }
+        server {
+            description = "Development Server"
+        }
+
     }
+
 }

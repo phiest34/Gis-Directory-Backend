@@ -7,6 +7,7 @@ import io.ktor.http.content.*
 import io.ktor.server.application.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
+import io.github.smiley4.ktorswaggerui.dsl.post
 import io.ktor.server.routing.*
 import kotlinx.serialization.json.Json
 import java.io.File
@@ -15,7 +16,30 @@ import java.io.File
 private const val ADMIN_URL = "admin/"
 fun Application.adminRouting() {
     routing {
-        post("$ADMIN_URL/add") {
+        post("$ADMIN_URL/add", {
+            description = "Загрузить новую карту"
+            request {
+                multipartBody {
+                    mediaType(ContentType.MultiPart.FormData)
+                    part<File>("image") {
+                        mediaTypes = setOf(
+                            ContentType.Image.JPEG,
+                            ContentType.Image.PNG,
+                        )
+                    }
+                    part<File>("map") {
+                        mediaTypes = setOf(
+                            ContentType.MultiPart.ByteRanges
+                        )
+                    }
+                    part<String>("json") {
+                        mediaTypes = setOf(
+                            ContentType.Text.Any
+                        )
+                    }
+                }
+            }
+        }) {
             val multipartData = call.receiveMultipart()
             var mapModel: CreateMapJson? = null
             var image: File? = null

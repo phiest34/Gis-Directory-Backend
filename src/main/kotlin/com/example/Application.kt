@@ -19,8 +19,7 @@ fun main() {
 fun Application.module() {
     registerWebMaps()
     initFirebase()
-    configureSerialization()
-    configureHTTP()
+    configureSwagger()
     configureRouting(WebMapInfoStaticStorage())
     adminRouting()
 }

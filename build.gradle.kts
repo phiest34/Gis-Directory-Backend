@@ -4,7 +4,7 @@ val logback_version: String by project
 
 plugins {
     kotlin("jvm") version "1.8.20"
-    id("io.ktor.plugin") version "2.3.0"
+    id("io.ktor.plugin") version  "2.3.0"
     id("org.jetbrains.kotlin.plugin.serialization") version "1.8.20"
 }
 
@@ -19,6 +19,7 @@ application {
 
 repositories {
     mavenCentral()
+    maven { url = uri("https://jitpack.io") }
 }
 
 
@@ -32,6 +33,7 @@ dependencies {
     testImplementation("io.ktor:ktor-server-tests-jvm:$ktor_version")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
     implementation("io.ktor:ktor-server-openapi:$ktor_version")
+    implementation("io.github.smiley4:ktor-swagger-ui:1.6.1")
 
     implementation("com.google.firebase:firebase-admin:9.0.0")
     implementation(kotlin("stdlib-js"))

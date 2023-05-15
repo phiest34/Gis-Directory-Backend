@@ -1,13 +1,16 @@
 package com.example.plugins
 
 import com.example.data.WebMapRepository
+import com.example.models.WebMap
+import com.example.models.WebMapInfo
 import com.example.register.WebMapInfoStaticStorage
+import io.github.smiley4.ktorswaggerui.dsl.OpenApiResponse
 import io.ktor.http.*
-import io.ktor.server.routing.*
+import io.github.smiley4.ktorswaggerui.dsl.get
 import io.ktor.server.response.*
 import io.ktor.server.application.*
-import io.ktor.server.http.content.*
 import io.ktor.server.request.*
+import io.ktor.server.routing.*
 import java.io.File
 
 fun Application.configureRouting(
@@ -19,18 +22,32 @@ fun Application.configureRouting(
             call.respondRedirect("/openapi")
         }
 
-        get("/{asset_map}") {
+        get("/{asset_map}", {
+            description = "Загружает карту в зависимости от URL параметра {asset_map}"
+        }) {
             val assetMap = call.parameters["asset_map"]
             call.respondText(File("src/main/resources/static/$assetMap/index.html").readText(), ContentType.Text.Html)
         }
 
-        get("/images/{image}") {
-            val image = call.parameters["image"]
-            call.respondFile(File("src/main/resources/static/images/$image"))
+        get("/images/{image_file}", {
+            description = "Загрузить изображение с выбранной локацией"
+            response {
+                addResponse(OpenApiResponse("200"))
+            }
+        }) {
+            val image = call.parameters["image_file"]
+            val file = File("src/main/resources/static/images/$image")
+            if (file.exists()) {
+                call.respondFile(File("src/main/resources/static/images/$image"))
+            } else {
+                call.respond(HttpStatusCode.NoContent, "No image found by such link")
+            }
+
         }
 
-        get("/{asset_map}/{...}") {
-            val assetMap = call.parameters["asset_map"]
+        get("/{asset_map}/{...}", {
+            hidden = true
+        }) {
             val path = call.request.path()
 
             val file = File("src/main/resources/static/$path")
@@ -54,12 +71,25 @@ fun Application.configureRouting(
         }
 
 
-        get("/webmaps") {
+        get("/webmaps", {
+            description = "Загрузить список всех доступных карт"
+            response {
+                HttpStatusCode.OK to {
+                    body<List<WebMap>>()
+                }
+            }
+        }) {
             val result = WebMapRepository.getWebMaps()
             call.respond(mapOf("webmaps" to result))
         }
 
-        get("webmaps/{assetName}") {
+        get("webmaps/{assetName}", {
+            response {
+                HttpStatusCode.OK to {
+                    body<WebMap>()
+                }
+            }
+        }) {
             val assetName = call.parameters["assetName"]
 
             if (assetName == null) {
@@ -81,7 +111,14 @@ fun Application.configureRouting(
             call.respond(result)
         }
 
-        get("webmap_info/{assetName}") {
+        get("webmap_info/{assetName}", {
+            description = "Загрузить доп информацию о карте"
+            response {
+                HttpStatusCode.OK to {
+                    body<WebMapInfo>()
+                }
+            }
+        }) {
             val assetName = call.parameters["assetName"] ?: return@get call.respondText(
                 "Asset name required as path parameter.",
                 contentType = ContentType.Text.Plain,
